@@ -12,7 +12,9 @@
 
     <header>
         <h1>Sveiki atvyke į <?php echo "MB Pamaitink"; ?></h1>
+        <a href="prisijungimas.php">
         <button id="login">Prisijungti</button>
+        </a>
     </header>
 
     <section>

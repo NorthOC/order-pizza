@@ -6,6 +6,15 @@
     <title>Lojalumo registracija</title>
     <link rel="stylesheet" href="style.css">
     <style>
+    form {
+    text-align: center;
+    padding: 10px;
+    background-color: #73aeee;
+    color: white;
+    position: center;
+    top: 100;
+    width: 100%;
+}
     </style>
 </head>
 <body>
@@ -13,7 +22,7 @@
         <h1>Lojalumo registracijos anketa</h1>
     </header>
 
-    <form id="form">
+    <form id="form" method="POST" action="patvirtinimas.php">
         <label for="vardas">Vardas:</label><br>
         <input type="text" id="vardas" name="vardas"><br>
         <label for="pavarde">Pavardė:</label><br>

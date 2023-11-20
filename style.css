@@ -52,3 +52,17 @@ footer {
     top: 100;
     width: 100%;
 }
+
+#table {
+    text-align: center;
+    padding: 10px;
+    background-color: #73aeee;
+    color: white;
+    position: center;
+    top: 100;
+    width: 100%;
+}
+
+#data {
+    text-align: center;
+}
