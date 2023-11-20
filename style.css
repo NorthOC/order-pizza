@@ -42,3 +42,13 @@ footer {
 #login {
     text-align: right;
 }
+
+#form {
+    text-align: center;
+    padding: 10px;
+    background-color: #73aeee;
+    color: white;
+    position: center;
+    top: 100;
+    width: 100%;
+}

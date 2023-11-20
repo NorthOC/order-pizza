@@ -17,9 +17,6 @@
 
     <section>
         <h3>Kokia nors reklama goes here</h3>
-        <a href="uzsakymas.php">
-            <button>Uzsisakyti!</button>
-        </a>
     </section>
     <section>
         <h3>Norite tapti lojalumo klientu? spauskite cia!</h3>
