@@ -37,8 +37,6 @@ $menu = $db->ListMenu();
         <h2>Picos pasirinkimas</h2>
 
         <?php
-            $items = mysqli_num_rows($menu);
-            echo("<p>".$items."</p>");
             if(mysqli_num_rows($menu) > 0) {
                 while($row = mysqli_fetch_assoc($menu)){
         ?>
@@ -50,9 +48,12 @@ $menu = $db->ListMenu();
                 }
             };
         ?>
+        <label for="address">Pristatymo adresas (palikite tusčią, jeigu atvažiuosite patys):</label>
+        <input type="text" name="address"><br>
+        <label for="phone" required>Telefono numeris:</label>
+        <input type="text" name="phone" required><br>
         <label for="loyalty_code">Lojalumo kodas:</label>
-        <input type="text" name="loyalty_code" maxlength="10">
-        <br>
+        <input type="text" name="loyalty_code" maxlength="10"><br>
         <button type="submit" value="Uzsisakyti">Uzsisakyti</button>
     </form>
     </div>
