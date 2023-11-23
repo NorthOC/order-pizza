@@ -74,26 +74,33 @@ class Db
         $result=mysqli_query($this->con, "SELECT * FROM pardavimas ORDER BY `data` DESC LIMIT 1");
         return $result;
     }
-    public function CreateLoyalClient($form){
+    public function CreateLoyalClient($kliento_kodas, $vardas, $pavarde, $tel_nr, $el_pastas, $adresas){
         //sukuria klientą su lojalumo kodu
-        $success = False;
-        $vardas = $form['fname'];
-        $pavarde = $form['lname'];
-        $tel_nr = $form['pnumber'];
-        $el_pastas = $form['email'];
-        $adresas = $form['address'];
 
-        $kliento_kodas = substr($vardas,0,3) . substr($pavarde,0,3) . substr($tel_nr,-3,3);
+        $kliento_kodas = strtoupper(substr($vardas,0,3) . substr($pavarde,0,3) . substr($tel_nr,-3,3));
 
-        $result=mysqli_query($this->con,"INSERT INTO lojalumo_klientas (kliento_kodas, vardas, pavarde, numeris, el_pastas, adresas, uzsakymu_kiekis)
-                                        VALUES ('$kliento_kodas', '$vardas', '$pavarde', '$tel_nr', '$el_pastas', '$adresas', 0)");
-        $success = True;
-        return $success;
+        try{
+
+        $result = mysqli_query($this->con,"INSERT INTO lojalumo_klientas (kliento_kodas, vardas, pavarde, numeris, el_pastas, adresas, uzsakymu_kiekis, taikoma_nuolaida)
+                                        VALUES ('$kliento_kodas', '$vardas', '$pavarde', '$tel_nr', '$el_pastas', '$adresas', 0, 5)");
+        }
+        catch (mysqli_sql_exception $err){
+            if ($err->getCode() == 1062) {
+                return False;
+            };
+        };
+        return True;
     }
 
     public function GetLoyalClient($client_id){
-        //Gražina lojalumo klientą
+        //Gražina lojalumo klientą pagal lojalumo id
+        $client_id = strtoupper($client_id);
         $result=mysqli_query($this->con,"SELECT * FROM lojalumo_klientas WHERE kliento_kodas='$client_id' LIMIT 1");
+        return $result;
+    }
+    public function GetLoyalClientByEmail($client_email){
+        //Gražina lojalumo klientą pagal el. paštą
+        $result=mysqli_query($this->con,"SELECT * FROM lojalumo_klientas WHERE el_pastas='$client_email' LIMIT 1");
         return $result;
     }
     public function GetLoyalClientDiscount($client_id){

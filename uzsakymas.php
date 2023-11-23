@@ -1,4 +1,8 @@
 <?php
+session_start();
+if(!isset($_SESSION['loyalty_code'])){
+    $_SESSION['loyalty_code'] = '';
+};
 $db = include("db.php");
 $menu = $db->ListMenu();
 ?>
@@ -53,13 +57,10 @@ $menu = $db->ListMenu();
         <label for="phone" required>Telefono numeris:</label>
         <input type="text" name="phone" required><br>
         <label for="loyalty_code">Lojalumo kodas:</label>
-        <input type="text" name="loyalty_code" maxlength="10"><br>
+        <input type="text" name="loyalty_code" maxlength="10" value='<?php echo($_SESSION['loyalty_code']);?>'><br>
         <button type="submit" value="Uzsisakyti">Uzsisakyti</button>
     </form>
     </div>
-    <footer>
-        &copy; <?php echo date("Y"); ?> My Website. All rights reserved.
-    </footer>
     <footer>
         &copy; <?php echo date("Y"); ?> My Website. All rights reserved.
     </footer>
