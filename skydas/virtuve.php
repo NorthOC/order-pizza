@@ -2,12 +2,12 @@
 require_once("../config.php");
 session_start();
 if ($_SESSION['secret'] !== SECRET_KEY){
-    header("Location: ../administracijai.php");
+    header("Location: ../virtuvei.php");
+    die();
 }
 
 $db = include("../db.php");
 
-//TODO: POST handling here
 if($_SERVER['REQUEST_METHOD'] === "POST"){
     if(isset($_POST['fragment-id'])){
         $db->CompleteOrderFragment($_POST['fragment-id']);

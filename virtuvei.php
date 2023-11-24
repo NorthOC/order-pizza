@@ -32,7 +32,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         <h1>Prisijungimas</h1>
     </header>
 
-    <form id="form" method="post" action="administracijai.php">
+    <form id="form" method="post" action="virtuvei.php">
         <?php 
         if($err === True){
             echo "<p>Neteisingas kodas. Bandykite dar kartą.</p>";

@@ -12,9 +12,6 @@
 
     <header>
         <h1>Sveiki atvyke į <?php echo "MB Pamaitink"; ?></h1>
-        <a href="prisijungimas.php">
-        <button id="login">Prisijungti</button>
-        </a>
     </header>
 
     <section>
@@ -31,6 +28,10 @@
     </section>
     <footer>
         &copy; <?php echo date("Y"); ?> My Website. All rights reserved.
+        <br>
+        <a href="./virtuvei.php">Virtuvei</a>
+        <br>
+        <a href="./isveziotojams.php">Išvežiotojams</a>
     </footer>
 
 </body>

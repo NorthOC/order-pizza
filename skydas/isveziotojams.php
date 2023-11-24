@@ -1,3 +1,25 @@
+<?php
+session_start();
+$db = include("../db.php");
+
+if(mysqli_num_rows($db->GetDriver($_SESSION['email'], $_SESSION['password'])) < 1){
+    header("Location: ../isveziotojams.php");
+    die();
+};
+
+if($_SERVER['REQUEST_METHOD'] === "POST"){
+    if(isset($_POST['order-id'])){
+        $db->AddDriverToOrder($_POST['order-id'], $_SESSION['driver-id']);
+    }
+}
+
+//Pull up orders
+//Asign to orders
+$free_orders = $db->ListFreeOrders();
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +42,8 @@
 <body>
 
 <header>
-        <h1>Delivery Driver Dashboard</h1>
+        <h1>Laisvi užsakymai</h1>
+        <a href="./mano-uzsakymai.php">mano užsakymų skydas</a>
     </header>
 
     <h1 id="data">Data Table</h1>
@@ -28,13 +51,38 @@
     <table id="table" border="1">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Uzsakymas</th>
+                <th>Sąskaitos ID</th>
+                <th>Adresas</th>
+                <th>Kaina</th>
                 <th>Statusas</th>
             </tr>
         </thead>
         <tbody id="data-table-body">
-            <!-- Data will be dynamically added here -->
+        <?php
+            if(mysqli_num_rows($free_orders) > 0) {
+                while($row = mysqli_fetch_assoc($free_orders)){
+            ?>
+            <tr>
+                <td>
+                    <?php echo($row['saskaitos_id']);?>
+                </td>
+                <td>
+                    <?php echo($row['adresas']);?>
+                </td>
+                <td>
+                    <?php echo($row['kaina_su_nuolaida']);?>
+                </td>
+                <td>
+                    <form action="isveziotojams.php">
+                        <input type="hidden" name="order-id" value="<?php echo($row['id']);?>">
+                    </form>
+                    <?php echo($row['kaina_su_nuolaida']);?>
+                </td>
+            </tr>
+            <?php
+                };
+            };
+            ?>
         </tbody>
     </table>
     <footer>

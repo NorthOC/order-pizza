@@ -50,9 +50,9 @@ class Db
         return $success;
     }
 
-    public function ListDrivers(){
-        //Gražina visus vairuotojus
-        $result=mysqli_query($this->con,"SELECT * FROM uzsakymas WHERE statusas='vykdoma' AND pristatymo_budas='pristatymas'");
+    public function GetDriver($email, $password){
+        //Gražina viena vairuotoja
+        $result=mysqli_query($this->con,"SELECT * FROM isveziotojas WHERE el_pastas='$email' AND slaptazodis='$password' LIMIT 1");
         return $result;
     }
 
