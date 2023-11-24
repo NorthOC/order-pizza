@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
         };
     };
 
-    $order_created = $db->CreateOrder($sask_id, $delivery_type, $address, $loyalty_code);
+    $order_created = $db->CreateOrder($sask_id, $delivery_type, $address, $loyalty_code, $phone);
 
 };
 ?>

@@ -32,13 +32,18 @@ class Db
     }
     public function ListFreeOrders(){
         //Gražina visus nebaigtus užsakymų objektus, kurie priklauso išvežiotojams
-        $result=mysqli_query($this->con,"SELECT * FROM uzsakymas WHERE statusas='vykdomas' AND pristatymo_budas='vezimas'");
+        $result=mysqli_query($this->con,"SELECT * FROM uzsakymas WHERE statusas='vykdoma' AND pristatymo_budas='pristatymas' AND isveziotojo_id is NULL");
+        return $result;
+    }
+    public function ListDriverOrders($driver_id){
+        //Gražina vieno išvežiotojo užsakymus
+        $result=mysqli_query($this->con,"SELECT * FROM uzsakymas WHERE statusas='vykdoma' AND pristatymo_budas='pristatymas' AND isveziotojo_id='$driver_id'");
         return $result;
     }
     public function ChangeOrderStatusToCompleted($order_id){
         //Pakeičia užsakymo statusą, į užbaigtą
         $success = False;
-        $result=mysqli_query($this->con,"UPDATE uzsakymas SET statusas='ivykdytas' WHERE id='$order_id'");
+        $result=mysqli_query($this->con,"UPDATE uzsakymas SET statusas='ivykdyta' WHERE id='$order_id'");
         $success = True;
         return $success;
     }
@@ -122,7 +127,7 @@ class Db
             return 0;
         }
     }
-    public function CreateOrder($pardavimo_sask_id, $pristatymo_budas, $adresas, $lojalumo_kodas) {
+    public function CreateOrder($pardavimo_sask_id, $pristatymo_budas, $adresas, $lojalumo_kodas, $telefonas) {
         // Sukuria užsakymą
         $success = False;
 
@@ -130,8 +135,8 @@ class Db
         $nuolaidos_procentai = intval($this->GetLoyalClient($lojalumo_kodas)->fetch_assoc()['taikoma_nuolaida']);
         $kaina_su_nuolaida = $kaina * ((100 - $nuolaidos_procentai) / 100);
 
-        mysqli_query($this->con,"INSERT INTO uzsakymas (saskaitos_id, kliento_id, pristatymo_budas, kaina_be_nuolaidos, kaina_su_nuolaida, adresas)
-                                        VALUES ('$pardavimo_sask_id', '$lojalumo_kodas', '$pristatymo_budas', '$kaina', '$kaina_su_nuolaida', '$adresas')");
+        mysqli_query($this->con,"INSERT INTO uzsakymas (saskaitos_id, kliento_id, pristatymo_budas, kaina_be_nuolaidos, kaina_su_nuolaida, adresas, telefonas)
+                                        VALUES ('$pardavimo_sask_id', '$lojalumo_kodas', '$pristatymo_budas', '$kaina', '$kaina_su_nuolaida', '$adresas', '$telefonas')");
         
         $success = True;
         return $success;

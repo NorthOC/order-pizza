@@ -10,6 +10,7 @@ if(mysqli_num_rows($db->GetDriver($_SESSION['email'], $_SESSION['password'])) < 
 if($_SERVER['REQUEST_METHOD'] === "POST"){
     if(isset($_POST['order-id'])){
         $db->AddDriverToOrder($_POST['order-id'], $_SESSION['driver-id']);
+        $flash_msg = True;
     }
 }
 
@@ -46,7 +47,17 @@ $free_orders = $db->ListFreeOrders();
         <a href="./mano-uzsakymai.php">mano užsakymų skydas</a>
     </header>
 
-    <h1 id="data">Data Table</h1>
+    <?php
+        if(isset($flash_msg)){
+            // patvirtina jeigu užsakymas atžymėtas sėkmingai
+
+    ?>
+
+    <p>Užsakymas sėkmingai buvo pridėdas. Galite jį peržiūrėti <a href="mano-uzsakymai.php">čia</a>.</p>
+
+    <?php 
+        };
+    ?>
 
     <table id="table" border="1">
         <thead>
@@ -73,10 +84,10 @@ $free_orders = $db->ListFreeOrders();
                     <?php echo($row['kaina_su_nuolaida']);?>
                 </td>
                 <td>
-                    <form action="isveziotojams.php">
+                    <form action="isveziotojams.php" method="POST">
                         <input type="hidden" name="order-id" value="<?php echo($row['id']);?>">
+                        <button type="submit">Atsižymėti</button>
                     </form>
-                    <?php echo($row['kaina_su_nuolaida']);?>
                 </td>
             </tr>
             <?php
