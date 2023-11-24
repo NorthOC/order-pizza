@@ -69,6 +69,15 @@ class Db
         $result=mysqli_query($this->con, "SELECT * FROM pardavimas WHERE saskaitos_id='$order_recognition_id'");
         return $result;
     }
+    public function ListIncompleteOrderFragments(){
+        //Gražina užsakymo pardavimų objektus kuriuos virtuvė turi pagaminti
+        $result=mysqli_query($this->con, "SELECT * FROM pardavimas WHERE statusas='gaminama' ORDER BY saskaitos_id ASC");
+        return $result;
+    }
+    public function CompleteOrderFragment($fragment_id){
+        //Virtuvė pažymi, jog pardavimas buvo pagamintas
+        mysqli_query($this->con, "UPDATE pardavimas SET statusas='pagaminta' WHERE id='$fragment_id'");
+    }
     public function MostRecentOrderFragment(){
         //Gražina patį naujausia pardavimą
         $result=mysqli_query($this->con, "SELECT * FROM pardavimas ORDER BY `data` DESC LIMIT 1");
