@@ -15,15 +15,15 @@
     </header>
 
     <section>
-        <h3>Kokia nors reklama goes here</h3>
+        <h3>Užsisakykite mūsų naują 4 sūrių picą!</h3>
         <a href="uzsakymas.php">
-            <button>Uzsisakyti!</button>
+            <button>Užsisakyti!</button>
         </a>
     </section>
     <section>
         <h3>Norite tapti lojalumo klientu? spauskite cia!</h3>
         <a href="lojalumas.php">
-            <button>Form</button>
+            <button>Lojalumas</button>
         </a>
     </section>
     <footer>
