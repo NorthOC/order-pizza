@@ -132,12 +132,25 @@ class Db
         $success = False;
 
         $kaina = $this->CalculatePrice($pardavimo_sask_id);
-        $nuolaidos_procentai = intval($this->GetLoyalClient($lojalumo_kodas)->fetch_assoc()['taikoma_nuolaida']);
-        $kaina_su_nuolaida = $kaina * ((100 - $nuolaidos_procentai) / 100);
-
-        mysqli_query($this->con,"INSERT INTO uzsakymas (saskaitos_id, kliento_id, pristatymo_budas, kaina_be_nuolaidos, kaina_su_nuolaida, adresas, telefonas)
-                                        VALUES ('$pardavimo_sask_id', '$lojalumo_kodas', '$pristatymo_budas', '$kaina', '$kaina_su_nuolaida', '$adresas', '$telefonas')");
-        
+        if($lojalumo_kodas != ""){
+            $klientas = $this->GetLoyalClient($lojalumo_kodas);
+            if (mysqli_num_rows($klientas) > 0){
+            $nuolaidos_procentai = intval($klientas->fetch_assoc()['taikoma_nuolaida']);
+            $kaina_su_nuolaida = $kaina * ((100 - $nuolaidos_procentai) / 100);
+            mysqli_query($this->con,"INSERT INTO uzsakymas (saskaitos_id, kliento_id, pristatymo_budas, kaina_be_nuolaidos, kaina_su_nuolaida, adresas, telefonas)
+            VALUES ('$pardavimo_sask_id', '$lojalumo_kodas', '$pristatymo_budas', '$kaina', '$kaina_su_nuolaida', '$adresas', '$telefonas')");
+            }
+            else{
+                $kaina_su_nuolaida = $kaina;
+                mysqli_query($this->con,"INSERT INTO uzsakymas (saskaitos_id, pristatymo_budas, kaina_be_nuolaidos, kaina_su_nuolaida, adresas, telefonas)
+                VALUES ('$pardavimo_sask_id', '$pristatymo_budas', '$kaina', '$kaina_su_nuolaida', '$adresas', '$telefonas')");
+                
+            }
+        } else{
+            $kaina_su_nuolaida = $kaina;
+            mysqli_query($this->con,"INSERT INTO uzsakymas (saskaitos_id, pristatymo_budas, kaina_be_nuolaidos, kaina_su_nuolaida, adresas, telefonas)
+                                        VALUES ('$pardavimo_sask_id', '$pristatymo_budas', '$kaina', '$kaina_su_nuolaida', '$adresas', '$telefonas')");
+        };
         $success = True;
         return $success;
     }
